@@ -1,12 +1,12 @@
 #!/usr/bin/python3
+"""
+Fetch and display the TODO list progress for a given employee ID.
+"""
 
 import requests
 import sys
 
 def employee_todo_progress(employee_id):
-    """
-    Feth and display the TODO list progress for a given employee ID.
-    """
     employee_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     employee_response = requests.get(employee_url)
     employee_data = employee_response.json()

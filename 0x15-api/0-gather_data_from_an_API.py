@@ -1,38 +1,30 @@
 #!/usr/bin/python3
-"""
-Fetch and display the TODO list progress for a given employee ID.
-"""
+"""For a given employee ID, returns information about
+their TODO list progress"""
 
 import requests
 import sys
 
-def employee_todo_progress(employee_id):
-    employee_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    employee_response = requests.get(employee_url)
-    employee_data = employee_response.json()
-
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    todos_response = requests.get(todos_url)
-    todos_data = todos_response.json()
-
-    employee_name = employee_data['name']
-
-    total_tasks = len(todos_data)
-    done_tasks = [task for task in todos_data if task['completed']]
-    number_of_done_tasks = len(done_tasks)
-
-    print(f"Employee {employee_name} is done with tasks({number_of_done_tasks}/{total_tasks}):")
-    for task in done_tasks:
-        print(f"\t {task['title']}")
-
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
-        sys.exit(1)
 
-    try:
-        employee_id = int(sys.argv[1])
-        employee_todo_progress(employee_id)
-    except ValueError:
-        print("Employee ID must be an integer.")
-        sys.exit(1)
+    userId = sys.argv[1]
+    user = requests.get("https://jsonplaceholder.typicode.com/users/{}"
+                        .format(userId))
+
+    name = user.json().get('name')
+
+    todos = requests.get('https://jsonplaceholder.typicode.com/todos')
+    totalTasks = 0
+    completed = 0
+
+    for task in todos.json():
+        if task.get('userId') == int(userId):
+            totalTasks += 1
+            if task.get('completed'):
+                completed += 1
+
+    print('Employee {} is done with tasks({}/{}):'
+          .format(name, completed, totalTasks))
+
+    print('\n'.join(["\t " + task.get('title') for task in todos.json()
+          if task.get('userId') == int(userId) and task.get('completed')]))

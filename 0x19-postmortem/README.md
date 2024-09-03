@@ -35,3 +35,9 @@
 5. **Training**: Provide training for engineers on best practices for configuring and managing API Gateways.
 
 By addressing these measures, we aim to improve the reliability and stability of HandyHub's services, ensuring a better user experience and reducing the likelihood of similar outages in the future.
+
+Fun Fact: During the outage, our team discovered that the coffee machine was also down. Coincidence? We think not! ☕🚨
+
+!Coffee Machine Outage
+
+Remember, always keep your API Gateway and your coffee machine in top shape! 😉
